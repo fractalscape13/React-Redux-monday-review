@@ -50,11 +50,13 @@ class TicketControl extends React.Component {
   }
 
   handleDeletingTicket = (id) => {
-    const newMasterTicketList = this.state.masterTicketList.filter(ticket => ticket.id !== id);
-    this.setState({
-      masterTicketList: newMasterTicketList,
-      selectedTicket: null
-    });
+    const { dispatch } = this.props;
+    const action = {
+      type: 'DELETE_TICKET',
+      id: id
+    }
+    dispatch(action);
+    this.setState({selectedTicket: null});
   }
 
   handleEditClick = () => {
@@ -108,6 +110,13 @@ class TicketControl extends React.Component {
 
 }
 
-TicketControl = connect()(TicketControl);
+const mapStateToProps = state => {
+  return {
+    masterTicketList: state
+  }
+}
+
+
+TicketControl = connect(mapStateToProps)(TicketControl);
 
 export default TicketControl;
